@@ -1,4 +1,4 @@
-# vue_bank_application
+# Vue Bank
 
 This template should help get you started developing with Vue 3 in Vite.
 
