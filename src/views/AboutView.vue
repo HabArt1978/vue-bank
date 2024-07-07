@@ -3,8 +3,12 @@
 </script>
 
 <template>
-  <div>
-    <h1>About Page</h1>
-    <p>Hello "About page"</p>
-  </div>
+  <v-card-text>
+    <h1 style="color: blue">ABOUT VIEW</h1>
+
+    <p>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores blanditiis excepturi
+      veniam expedita id porro, quos saepe hic dignissimos labore.
+    </p>
+  </v-card-text>
 </template>

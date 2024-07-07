@@ -1,7 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { drawerItems } from '@/assets/library/library'
+import { useDisplay } from 'vuetify'
+
+const { mobile } = useDisplay()
+
+const props = defineProps<{ drawer: boolean }>()
+const drawer = props.drawer
+</script>
 
 <template>
-  <v-navigation-drawer v-model="drawer" :location="mobile.value ? 'left' : undefined" temporary>
+  <v-navigation-drawer v-model="drawer" :location="mobile ? 'left' : undefined" temporary>
     <v-list-item
       lines="two"
       prepend-avatar="https://randomuser.me/api/portraits/women/81.jpg"

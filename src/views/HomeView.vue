@@ -1,55 +1,17 @@
 <script setup lang="ts">
+import { drawerItems, menuItems } from '@/assets/library/library'
+import TheToolbar from '@/components/Toolbar/TheToolbar.vue'
 import { ref } from 'vue'
 import { useDisplay } from 'vuetify'
 
 const { mobile, mdAndUp } = useDisplay()
 
 const drawer = ref(false)
-
-const drawerItems = [
-  {
-    title: 'Home',
-    value: 'home',
-    icon: 'mdi-home-city'
-  },
-  {
-    title: 'Account',
-    value: 'account',
-    icon: 'mdi-account'
-  },
-  {
-    title: 'Account-group',
-    value: 'account-group',
-    icon: 'mdi-account-group-outline'
-  },
-  {
-    title: 'About Me',
-    value: 'about me',
-    icon: 'mdi-forum'
-  }
-]
-
-const menuItems = [
-  {
-    title: 'Toggle theme',
-    value: 'toggle-theme',
-    icon: 'mdi-theme-light-dark'
-  },
-  {
-    title: 'Search',
-    value: 'search',
-    icon: 'mdi-magnify'
-  },
-  {
-    title: 'Filter',
-    value: 'filter',
-    icon: 'mdi-filter'
-  }
-]
 </script>
 
 <template>
   <v-layout>
+    <TheToolbar />
     <v-app-bar color="primary" prominent>
       <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -80,7 +42,7 @@ const menuItems = [
       </v-menu>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" :location="mobile.value ? 'left' : undefined" temporary>
+    <v-navigation-drawer v-model="drawer" :location="mobile ? 'left' : undefined" temporary>
       <v-list-item
         lines="two"
         prepend-avatar="https://randomuser.me/api/portraits/women/81.jpg"
@@ -107,7 +69,15 @@ const menuItems = [
 
     <v-main style="height: 100vh">
       <v-card-text>
-        The navigation drawer will appear from the bottom on smaller size screens.
+        <h1 style="color: red">HOME VIEW</h1>
+
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur hic velit mollitia.
+          Quod similique vero veritatis? Exercitationem sequi esse temporibus, incidunt placeat
+          laboriosam distinctio est corporis, at qui sit architecto reprehenderit debitis facilis
+          ipsam. Quidem dicta illum totam, quam animi iste ab id doloremque recusandae voluptas nemo
+          numquam, asperiores enim.
+        </p>
       </v-card-text>
     </v-main>
   </v-layout>
