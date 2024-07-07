@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { drawerItems } from '@/assets/library/library'
-import { useDisplay } from 'vuetify'
+import { defineModel } from "vue";
+import { useDisplay } from "vuetify";
+
+const isDrawerOpen = defineModel<boolean>('isOpen', { required: true })
 
 const { mobile } = useDisplay()
-
-const props = defineProps<{ drawer: boolean }>()
-const drawer = props.drawer
 </script>
 
 <template>
-  <v-navigation-drawer v-model="drawer" :location="mobile ? 'left' : undefined" temporary>
+  <v-navigation-drawer v-model="isDrawerOpen" :location="mobile ? 'bottom' : 'left'" temporary>
     <v-list-item
       lines="two"
       prepend-avatar="https://randomuser.me/api/portraits/women/81.jpg"
       subtitle="Logged in"
       title="Jane Smith"
-    ></v-list-item>
+    />
 
     <v-divider></v-divider>
 
@@ -25,7 +25,7 @@ const drawer = props.drawer
 
     <template v-slot:append>
       <div class="pa-2">
-        <v-btn block v-btn prepend-icon="mdi-logout" color="red-darken-4"> Logout </v-btn>
+        <v-btn block prepend-icon="mdi-logout" color="red-darken-4"> Logout </v-btn>
       </div>
     </template>
   </v-navigation-drawer>
