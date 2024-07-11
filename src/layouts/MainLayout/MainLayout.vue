@@ -13,7 +13,7 @@ const isDrawerOpen = ref(false)
 
     <Drawer v-model:is-open="isDrawerOpen" />
 
-    <v-main style="height: 100vh">
+    <v-main class="h-100">
       <slot />
     </v-main>
   </v-layout>

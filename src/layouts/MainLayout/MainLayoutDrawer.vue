@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { drawerItems } from '@/assets/library/library'
-import { defineModel } from "vue";
-import { useDisplay } from "vuetify";
+import { defineModel } from 'vue'
+import { useRouter } from 'vue-router'
+import { useDisplay } from 'vuetify'
 
 const isDrawerOpen = defineModel<boolean>('isOpen', { required: true })
 
 const { mobile } = useDisplay()
+
+const router = useRouter()
 </script>
 
 <template>
@@ -19,8 +22,15 @@ const { mobile } = useDisplay()
 
     <v-divider></v-divider>
 
-    <v-list v-for="(item, idx) in drawerItems" :key="idx">
-      <v-list-item :prepend-icon="item.icon" :title="item.title" :value="item.value"></v-list-item>
+    <v-list>
+      <v-list-item
+        v-for="(item, idx) in drawerItems"
+        :key="idx"
+        @click="router.push({ name: item.value })"
+        :prepend-icon="item.icon"
+        :title="item.title"
+        :value="item.value"
+      ></v-list-item>
     </v-list>
 
     <template v-slot:append>

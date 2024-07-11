@@ -7,19 +7,14 @@ const drawerItems: DrawerItems = [
     icon: 'mdi-home-city'
   },
   {
-    title: 'Account',
-    value: 'account',
-    icon: 'mdi-account'
-  },
-  {
-    title: 'Account-group',
-    value: 'account-group',
-    icon: 'mdi-account-group-outline'
-  },
-  {
     title: 'About Me',
-    value: 'about me',
+    value: 'about-me',
     icon: 'mdi-forum'
+  },
+  {
+    title: 'Login',
+    value: 'login',
+    icon: 'mdi-login'
   }
 ]
 
