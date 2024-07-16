@@ -14,7 +14,9 @@ const isDrawerOpen = ref(false)
     <Drawer v-model:is-open="isDrawerOpen" />
 
     <v-main class="h-100">
-      <slot />
+      <v-fade-transition>
+        <slot />
+      </v-fade-transition>
     </v-main>
   </v-layout>
 </template>

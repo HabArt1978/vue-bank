@@ -7,8 +7,15 @@ import 'vuetify/styles'
 const vuetify = createVuetify({
   components,
   directives,
+  theme: {
+    defaultTheme: 'dark'
+  },
   icons: {
     defaultSet: 'mdi'
+  },
+  defaults: {
+    VBtn: { variant: 'tonal', color: 'blue-darken-2' },
+    VTextField: { variant: 'outlined', density: 'comfortable', color: 'blue' }
   }
 })
 

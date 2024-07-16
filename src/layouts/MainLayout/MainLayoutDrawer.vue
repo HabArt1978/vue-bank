@@ -35,7 +35,7 @@ const router = useRouter()
 
     <template v-slot:append>
       <div class="pa-2">
-        <v-btn block prepend-icon="mdi-logout" color="red-darken-4"> Logout </v-btn>
+        <v-btn variant="flat" block prepend-icon="mdi-logout" color="red-darken-4"> Logout </v-btn>
       </div>
     </template>
   </v-navigation-drawer>

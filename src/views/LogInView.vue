@@ -16,20 +16,15 @@ let visible = ref(false)
       <v-card-title class="text-center text-h4 text-blue-darken-3">Log in</v-card-title>
 
       <v-form fast-fail @submit.prevent>
-        <div class="text-subtitle-1 text-medium-emphasis">Email</div>
-
         <v-text-field
           v-model="loginForm.email"
           type="email"
-          density="compact"
+          label="Email"
           placeholder="Email address"
           prepend-inner-icon="mdi-email-outline"
-          variant="outlined"
         ></v-text-field>
 
-        <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-          Password
-
+        <div class="text-subtitle-1 text-medium-emphasis d-flex justify-end">
           <RouterLink
             class="text-caption text-decoration-none text-blue"
             to="#"
@@ -45,10 +40,9 @@ let visible = ref(false)
           autocomplete="off"
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="visible ? 'text' : 'password'"
-          density="compact"
+          label="Password"
           placeholder="Enter your password"
           prepend-inner-icon="mdi-lock-outline"
-          variant="outlined"
           @click:append-inner="visible = !visible"
         ></v-text-field>
 
@@ -58,25 +52,11 @@ let visible = ref(false)
           color="orange-darken-3"
         ></v-checkbox>
 
-        <v-btn
-          class="mb-8"
-          color="blue"
-          size="large"
-          variant="tonal"
-          prepend-icon="mdi-login"
-          block
-        >
-          Log In
-        </v-btn>
+        <v-btn class="mb-8" size="large" prepend-icon="mdi-login" block> Log In </v-btn>
       </v-form>
 
       <v-card-text class="text-center">
-        <RouterLink
-          class="text-blue text-decoration-none"
-          to="/sing-up"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        <RouterLink class="text-blue text-decoration-none" to="/sing-up">
           Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
         </RouterLink>
       </v-card-text>
