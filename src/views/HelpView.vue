@@ -4,7 +4,7 @@
 
 <template>
   <v-card-text>
-    <h1 style="color: blue">ABOUT ME VIEW</h1>
+    <h1 style="color: blue">HELP VIEW</h1>
 
     <p>
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores blanditiis excepturi

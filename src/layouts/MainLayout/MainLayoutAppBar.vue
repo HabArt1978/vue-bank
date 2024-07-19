@@ -6,7 +6,9 @@ import { useDisplay, useTheme } from 'vuetify'
 const { mdAndUp, mobile } = useDisplay()
 const theme = useTheme()
 
-const darkTheme = ref(false)
+console.log(theme.global.name.value)
+
+const darkTheme = ref<boolean>(false)
 
 function toggleTheme() {
   darkTheme.value = !darkTheme.value
