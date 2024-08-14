@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const loginForm = ref({
+const logInForm = ref({
   email: '',
   password: '',
   remember: false
@@ -13,14 +13,14 @@ let visible = ref(false)
 <template>
   <div class="px-4">
     <v-card class="mx-auto mt-10 pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
-      <v-card-title class="text-center text-h4 text-blue-darken-3">Log in</v-card-title>
+      <v-card-title class="text-center text-h4 text-blue-darken-3">Авторизация</v-card-title>
 
       <v-form fast-fail @submit.prevent>
         <v-text-field
-          v-model="loginForm.email"
+          v-model="logInForm.email"
           type="email"
           label="Email"
-          placeholder="Email address"
+          placeholder="Адрес электронной почты"
           prepend-inner-icon="mdi-email-outline"
         ></v-text-field>
 
@@ -31,33 +31,33 @@ let visible = ref(false)
             rel="noopener noreferrer"
             target="_blank"
           >
-            Forgot login password?</RouterLink
+            Забыли пароль для входа в систему?</RouterLink
           >
         </div>
 
         <v-text-field
-          v-model="loginForm.password"
+          v-model="logInForm.password"
           autocomplete="off"
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="visible ? 'text' : 'password'"
           label="Password"
-          placeholder="Enter your password"
+          placeholder="Введите пароль"
           prepend-inner-icon="mdi-lock-outline"
           @click:append-inner="visible = !visible"
         ></v-text-field>
 
         <v-checkbox
-          v-model="loginForm.remember"
-          label="Remember Me"
+          v-model="logInForm.remember"
+          label="Запомнить меня"
           color="orange-darken-3"
         ></v-checkbox>
 
-        <v-btn class="mb-8" size="large" prepend-icon="mdi-login" block> Log In </v-btn>
+        <v-btn class="mb-8" size="large" prepend-icon="mdi-login" block>Войти</v-btn>
       </v-form>
 
       <v-card-text class="text-center">
         <RouterLink class="text-blue text-decoration-none" to="/sing-up">
-          Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
+          Зарегистрироваться <v-icon icon="mdi-chevron-right"></v-icon>
         </RouterLink>
       </v-card-text>
     </v-card>

@@ -8,12 +8,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'orders',
+      name: 'Orders',
       component: OrdersView
     },
     {
       path: '/help',
-      name: 'help',
+      name: 'Help',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -21,7 +21,7 @@ const router = createRouter({
     },
     {
       path: '/messages',
-      name: 'messages',
+      name: 'Messages',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -29,12 +29,12 @@ const router = createRouter({
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: () => import('../views/LogInView.vue')
     },
     {
       path: '/sing-up',
-      name: 'sing-up',
+      name: 'Sing-up',
       component: () => import('../views/SingUpView.vue')
     }
   ]

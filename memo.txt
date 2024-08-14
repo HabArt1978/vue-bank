@@ -1,1 +1,2 @@
 pnpm add @mdi/font -D
+pnpm add vee-validate zod @vee-validate/zod

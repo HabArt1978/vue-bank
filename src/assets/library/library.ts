@@ -3,22 +3,22 @@ import type { DrawerItems, MenuItems } from './types'
 const drawerItems: DrawerItems = [
   {
     title: 'Заявки',
-    value: 'orders',
+    value: 'Orders',
     icon: 'mdi-receipt-text-edit-outline'
   },
   {
     title: 'Помощь',
-    value: 'help',
+    value: 'Help',
     icon: 'mdi-help-circle-outline'
   },
   {
     title: 'Сообщения',
-    value: 'messages',
+    value: 'Messages',
     icon: 'mdi-message-text-outline'
   },
   {
     title: 'Войти',
-    value: 'login',
+    value: 'Login',
     icon: 'mdi-login'
   }
 ]
