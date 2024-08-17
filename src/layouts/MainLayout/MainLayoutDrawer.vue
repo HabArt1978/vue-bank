@@ -13,7 +13,11 @@ const user = ref('Артур Хабибулин')
 </script>
 
 <template>
-  <v-navigation-drawer v-model="isDrawerOpen" :location="mobile ? 'bottom' : 'left'" temporary>
+  <v-navigation-drawer
+    v-model="isDrawerOpen"
+    :location="mobile ? 'bottom' : 'left'"
+    temporary
+  >
     <v-list-item
       lines="three"
       prepend-avatar="https://cdn.vuetifyjs.com/images/john.png"
@@ -21,22 +25,29 @@ const user = ref('Артур Хабибулин')
       subtitle="habart1978@gmail.com"
     />
 
-    <v-divider></v-divider>
+    <v-divider />
 
     <v-list>
       <v-list-item
         v-for="(item, idx) in drawerItems"
         :key="idx"
-        @click="router.push({ name: item.value })"
         :prepend-icon="item.icon"
         :title="item.title"
         :value="item.value"
-      ></v-list-item>
+        @click="router.push({ name: item.value })"
+      />
     </v-list>
 
     <template v-slot:append>
       <div class="pa-2">
-        <v-btn variant="flat" block prepend-icon="mdi-logout" color="red-darken-4"> Выйти </v-btn>
+        <v-btn
+          variant="flat"
+          block
+          prepend-icon="mdi-logout"
+          color="red-darken-4"
+        >
+          Выйти
+        </v-btn>
       </div>
     </template>
   </v-navigation-drawer>
