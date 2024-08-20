@@ -8,7 +8,7 @@
       class="text-center text-red-darken-3"
       color="red-darken-3"
     >
-      Sing up View
+      Registration View
     </h1>
   </v-card-text>
 </template>

@@ -1,13 +1,23 @@
 <script setup lang="ts">
+import { logInSchema, type LoginSchema } from '@/assets/schemas/loginSchema'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useField, useForm } from 'vee-validate'
 import { ref } from 'vue'
 
-const logInForm = ref({
-  email: '',
-  password: '',
-  remember: false
+const { handleSubmit, errors, isFieldValid } = useForm({
+  validationSchema: toTypedSchema(logInSchema)
 })
 
-let visible = ref(false)
+const { value: email } = useField('email')
+const { value: password } = useField('password')
+const { value: remember } = useField('remember')
+
+const isFieldsValid = ref(isFieldValid)
+const isVisible = ref(false)
+
+const onSubmit = handleSubmit((submitted: LoginSchema) => {
+  alert(JSON.stringify(submitted, null, 2))
+})
 </script>
 
 <template>
@@ -24,14 +34,17 @@ let visible = ref(false)
 
       <v-form
         fast-fail
-        @submit.prevent
+        @submit.prevent="onSubmit"
       >
         <v-text-field
-          v-model="logInForm.email"
+          id="email"
+          v-model="email"
+          name="email"
           type="email"
           label="Email"
           placeholder="Адрес электронной почты"
           prepend-inner-icon="mdi-email-outline"
+          :error-messages="errors.email"
         />
 
         <div class="text-subtitle-1 text-medium-emphasis d-flex justify-end">
@@ -46,18 +59,23 @@ let visible = ref(false)
         </div>
 
         <v-text-field
-          v-model="logInForm.password"
+          id="password"
+          v-model="password"
+          name="password"
           autocomplete="off"
-          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-          :type="visible ? 'text' : 'password'"
+          :append-inner-icon="isVisible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="isVisible ? 'text' : 'password'"
           label="Password"
           placeholder="Введите пароль"
           prepend-inner-icon="mdi-lock-outline"
-          @click:append-inner="visible = !visible"
+          :error-messages="errors.password"
+          @click:append-inner="isVisible = !isVisible"
         />
 
         <v-checkbox
-          v-model="logInForm.remember"
+          id="remember"
+          v-model="remember"
+          name="remember"
           label="Запомнить меня"
           color="orange-darken-3"
         />
@@ -67,6 +85,7 @@ let visible = ref(false)
           size="large"
           prepend-icon="mdi-login"
           block
+          type="submit"
           >Войти</v-btn
         >
       </v-form>
@@ -74,7 +93,7 @@ let visible = ref(false)
       <v-card-text class="text-center">
         <RouterLink
           class="text-blue text-decoration-none"
-          to="/sing-up"
+          to="/register"
         >
           Зарегистрироваться <v-icon icon="mdi-chevron-right" />
         </RouterLink>
