@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { logInSchema, type LoginSchema } from '@/assets/schemas/loginSchema'
 import { toTypedSchema } from '@vee-validate/zod'
-import { useField, useForm } from 'vee-validate'
+import { useField, useForm, useIsFormValid } from 'vee-validate'
 import { ref } from 'vue'
 
-const { handleSubmit, errors, isFieldValid } = useForm({
+const { handleSubmit, errors } = useForm({
   validationSchema: toTypedSchema(logInSchema)
 })
 
@@ -12,7 +12,7 @@ const { value: email } = useField('email')
 const { value: password } = useField('password')
 const { value: remember } = useField('remember')
 
-const isFieldsValid = ref(isFieldValid)
+const isValid = useIsFormValid()
 const isVisible = ref(false)
 
 const onSubmit = handleSubmit((submitted: LoginSchema) => {
@@ -86,6 +86,7 @@ const onSubmit = handleSubmit((submitted: LoginSchema) => {
           prepend-icon="mdi-login"
           block
           type="submit"
+          :disabled="!isValid"
           >Войти</v-btn
         >
       </v-form>
