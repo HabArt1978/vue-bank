@@ -4,6 +4,10 @@ import MainLayout from './layouts/MainLayout/MainLayout.vue'
 
 <template>
   <MainLayout>
-    <slot />
+    <router-view v-slot="{ Component }">
+      <v-fade-transition :hide-on-leave="true">
+        <component :is="Component" />
+      </v-fade-transition>
+    </router-view>
   </MainLayout>
 </template>

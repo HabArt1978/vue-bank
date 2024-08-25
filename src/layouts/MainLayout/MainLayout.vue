@@ -14,11 +14,7 @@ const isDrawerOpen = ref(false)
     <Drawer v-model:is-open="isDrawerOpen" />
 
     <v-main class="h-100">
-      <router-view v-slot="{ Component }">
-        <v-fade-transition>
-          <component :is="Component" />
-        </v-fade-transition>
-      </router-view>
+      <slot />
     </v-main>
   </v-layout>
 </template>
