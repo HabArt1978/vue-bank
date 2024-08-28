@@ -2,9 +2,9 @@
 import { logInSchema, type LoginSchema } from '@/assets/schemas/loginSchema'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useField, useForm, useIsFormValid } from 'vee-validate'
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 
-const { handleSubmit, errors } = useForm({
+const { handleSubmit, errors, isSubmitting, submitCount } = useForm({
   validationSchema: toTypedSchema(logInSchema)
 })
 
@@ -14,6 +14,15 @@ const { value: remember } = useField('remember')
 
 const isValid = useIsFormValid()
 const isVisible = ref(false)
+const isTooManyAttempts = computed(() => submitCount.value >= 3)
+
+watch(isTooManyAttempts, (val) => {
+  if (val) {
+    setTimeout(() => {
+      submitCount.value = 0
+    }, 5000)
+  }
+})
 
 const onSubmit = handleSubmit((submitted: LoginSchema) => {
   alert(JSON.stringify(submitted, null, 2))
@@ -86,7 +95,7 @@ const onSubmit = handleSubmit((submitted: LoginSchema) => {
           prepend-icon="mdi-login"
           block
           type="submit"
-          :disabled="!isValid"
+          :disabled="!isValid || isSubmitting || isTooManyAttempts"
           >Войти</v-btn
         >
       </v-form>
@@ -96,7 +105,7 @@ const onSubmit = handleSubmit((submitted: LoginSchema) => {
           class="text-blue text-decoration-none"
           to="/register"
         >
-          Зарегистрироваться <v-icon icon="mdi-chevron-right" />
+          Нет аккаунта? Заведите новый. <v-icon icon="mdi-chevron-right" />
         </RouterLink>
       </v-card-text>
     </v-card>

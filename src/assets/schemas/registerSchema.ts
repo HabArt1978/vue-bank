@@ -1,31 +1,47 @@
 import { z } from 'zod'
+import {
+  emailMinLength,
+  nicknameMaxLength,
+  nicknameMinLength,
+  passMaxLength,
+  passMinLength
+} from './constants'
 
-export const registrationSchema = z
+export const registerSchema = z
   .object({
     nickname: z
       .string()
       .trim()
-      .min(1, 'Поле обязательное для заполнения!')
-      .max(20, 'Псевдоним не может содержать больше 20 символов!'),
+      .min(nicknameMinLength, 'Поле обязательное для заполнения!')
+      .max(
+        nicknameMaxLength,
+        `Псевдоним не может содержать больше ${nicknameMaxLength} символов!`
+      ),
     email: z
       .string()
       .trim()
-      .min(1, 'Поле обязательное для заполнения!')
+      .min(emailMinLength, 'Поле обязательное для заполнения!')
       .email('Электронная почта имеет невалидное значение!'),
     password: z
       .string()
       .trim()
-      .min(8, 'Пароль должен содержать не менее 8 символов!')
-      .max(32, 'Пароль не может иметь более 32 символов!'),
+      .min(
+        passMinLength,
+        `Пароль должен содержать не менее ${passMinLength} символов!`
+      )
+      .max(
+        passMaxLength,
+        `Пароль не может иметь более ${passMaxLength} символов!`
+      ),
     confirmPassword: z
       .string()
       .trim()
-      .min(1, 'Поле проверки пароля не может быть пустым!')
+      .min(passMinLength, 'Поле проверки пароля не может быть пустым!')
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Пароли должны совпадать!',
     path: ['confirmPassword']
   })
-export type RegistrationSchema = z.infer<typeof registrationSchema>
+export type RegisterSchema = z.infer<typeof registerSchema>
 
-export type UserRegistrationData = Omit<RegistrationSchema, 'confirmPassword'>
+export type UserRegisterData = Omit<RegisterSchema, 'confirmPassword'>
