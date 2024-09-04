@@ -20,12 +20,12 @@ watch(isTooManyAttempts, (val) => {
   if (val) {
     setTimeout(() => {
       submitCount.value = 0
-    }, 5000)
+    }, 10000)
   }
 })
 
 const onSubmit = handleSubmit((submitted: LoginSchema) => {
-  alert(JSON.stringify(submitted, null, 2))
+  console.log(submitted)
 })
 </script>
 
@@ -37,7 +37,9 @@ const onSubmit = handleSubmit((submitted: LoginSchema) => {
       max-width="448"
       rounded="lg"
     >
-      <v-card-title class="text-center text-h4 text-blue-darken-3"
+      <v-card-title
+        class="text-center text-h4 text-blue-darken-3"
+        style="user-select: none"
         >Авторизация</v-card-title
       >
 
@@ -54,6 +56,7 @@ const onSubmit = handleSubmit((submitted: LoginSchema) => {
           placeholder="Адрес электронной почты"
           prepend-inner-icon="mdi-email-outline"
           :error-messages="errors.email"
+          autofocus
         />
 
         <div class="text-subtitle-1 text-medium-emphasis d-flex justify-end">
@@ -62,6 +65,7 @@ const onSubmit = handleSubmit((submitted: LoginSchema) => {
             to="#"
             rel="noopener noreferrer"
             target="_blank"
+            style="user-select: none"
           >
             Забыли пароль для входа в систему?</RouterLink
           >
@@ -96,16 +100,26 @@ const onSubmit = handleSubmit((submitted: LoginSchema) => {
           block
           type="submit"
           :disabled="!isValid || isSubmitting || isTooManyAttempts"
-          >Войти</v-btn
         >
+          Войти
+        </v-btn>
+
+        <div
+          v-if="isTooManyAttempts"
+          class="flex text-center text-red-darken-4"
+          style="user-select: none"
+        >
+          Слишком много попыток входа, попробуйте через 10 сек.
+        </div>
       </v-form>
 
       <v-card-text class="text-center">
         <RouterLink
           class="text-blue text-decoration-none"
           to="/register"
+          style="user-select: none"
         >
-          Нет аккаунта? Заведите новый. <v-icon icon="mdi-chevron-right" />
+          Нет аккаунта? Заведите новый <v-icon icon="mdi-chevron-right" />
         </RouterLink>
       </v-card-text>
     </v-card>

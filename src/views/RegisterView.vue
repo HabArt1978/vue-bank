@@ -51,6 +51,7 @@ const onSubmit = handleSubmit((submitted: RegisterSchema) => {
           placeholder="Псевдоним пользователя"
           prepend-inner-icon="mdi-account-outline"
           :error-messages="errors.nickname"
+          autofocus
         />
 
         <v-text-field
