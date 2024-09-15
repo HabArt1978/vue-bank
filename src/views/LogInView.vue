@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { logInSchema, type LoginSchema } from '@/assets/schemas/loginSchema'
+import { useLogInStore } from '@/stores/index'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useField, useForm, useIsFormValid } from 'vee-validate'
 import { computed, ref, watch } from 'vue'
+
+const logInStore = useLogInStore()
 
 const { handleSubmit, errors, isSubmitting, submitCount } = useForm({
   validationSchema: toTypedSchema(logInSchema)
@@ -24,8 +27,9 @@ watch(isTooManyAttempts, (val) => {
   }
 })
 
-const onSubmit = handleSubmit((submitted: LoginSchema) => {
-  console.log(submitted)
+const onSubmit = handleSubmit(async (submitted: LoginSchema) => {
+  console.table(submitted)
+  await logInStore.logIn(submitted)
 })
 </script>
 
@@ -109,7 +113,8 @@ const onSubmit = handleSubmit((submitted: LoginSchema) => {
           class="flex text-center text-red-darken-4"
           style="user-select: none"
         >
-          Слишком много попыток входа, попробуйте через 10 сек.
+          Слишком много попыток входа, повторная попытка будет доступна через 10
+          сек.
         </div>
       </v-form>
 
