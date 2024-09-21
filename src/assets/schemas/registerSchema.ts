@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import {
   emailMinLength,
-  nicknameMaxLength,
-  nicknameMinLength,
+  nickMaxLength,
+  nickMinLength,
   passMaxLength,
   passMinLength
 } from './constants'
@@ -12,10 +12,10 @@ export const registerSchema = z
     nickname: z
       .string()
       .trim()
-      .min(nicknameMinLength, 'Поле обязательное для заполнения!')
+      .min(nickMinLength, 'Поле обязательное для заполнения!')
       .max(
-        nicknameMaxLength,
-        `Псевдоним не может содержать больше ${nicknameMaxLength} символов!`
+        nickMaxLength,
+        `Псевдоним не может содержать больше ${nickMaxLength} символов!`
       ),
     email: z
       .string()

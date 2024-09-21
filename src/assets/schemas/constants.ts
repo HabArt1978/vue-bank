@@ -1,5 +1,5 @@
-export const nicknameMinLength: number = 1
-export const nicknameMaxLength: number = 20
+export const nickMinLength: number = 1
+export const nickMaxLength: number = 20
 
 export const emailMinLength: number = 1
 
