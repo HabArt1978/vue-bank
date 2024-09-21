@@ -44,7 +44,7 @@ const onSubmit = handleSubmit((submitted: RegisterSchema) => {
         <v-text-field
           id="nickname"
           v-model="nickname"
-          class="mt-2"
+          class="mt-4"
           name="nickname"
           type="text"
           label="Nickname"

@@ -54,6 +54,7 @@ const onSubmit = handleSubmit(async (submitted: LoginSchema) => {
         <v-text-field
           id="email"
           v-model="email"
+          class="mt-4"
           name="email"
           type="email"
           label="Email"
@@ -67,7 +68,6 @@ const onSubmit = handleSubmit(async (submitted: LoginSchema) => {
           <RouterLink
             class="text-caption text-decoration-none text-blue"
             to="#"
-            rel="noopener noreferrer"
             target="_blank"
             style="user-select: none"
           >
