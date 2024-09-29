@@ -18,13 +18,16 @@ export const useLogInStore = defineStore('logIn', () => {
     token.value = newToken
     localStorage.setItem('jwt-token', newToken)
   }
+
+  async function logIn(payload: LoginSchema): Promise<void> {
+    // пока подставляем вместо TOKEN тестовую строку
+
+    setToken('TEST TOKEN')
+  }
+
   function logOut(): void {
     token.value = null
     localStorage.removeItem('jwt-token')
-  }
-  async function logIn(payload: LoginSchema): Promise<void> {
-    // пока подставляем вместо TOKEN тестовую строку
-    setToken('TEST TOKEN')
   }
 
   return {

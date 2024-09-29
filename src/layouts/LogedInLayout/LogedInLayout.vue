@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import AppBar from './LogInLayoutAppBar.vue'
-import Drawer from './LogInLayoutDrawer.vue'
+import AppBar from './LogedInLayoutAppBar.vue'
+import Drawer from './LogedInLayoutDrawer.vue'
 
 const isDrawerOpen = ref(false)
 </script>

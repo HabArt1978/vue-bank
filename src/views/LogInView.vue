@@ -7,7 +7,7 @@ import { computed, ref, watch } from 'vue'
 
 const logInStore = useLogInStore()
 
-const { handleSubmit, errors, isSubmitting, submitCount } = useForm({
+const { handleSubmit, errors, isSubmitting, submitCount, resetForm } = useForm({
   validationSchema: toTypedSchema(logInSchema)
 })
 
@@ -27,9 +27,10 @@ watch(isTooManyAttempts, (val) => {
   }
 })
 
-const onSubmit = handleSubmit(async (submitted: LoginSchema) => {
-  console.table(submitted)
-  await logInStore.logIn(submitted)
+const onSubmit = handleSubmit(async (userData: LoginSchema) => {
+  console.table(userData)
+  await logInStore.logIn(userData)
+  resetForm()
 })
 </script>
 
