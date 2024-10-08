@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { drawerItems } from '@/assets/library/library'
+import { useLogInStore } from '@/stores/index'
 import { defineModel, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
 
 const isDrawerOpen = defineModel<boolean>('isOpen', { required: true })
 
+const { logOut } = useLogInStore()
 const { mobile } = useDisplay()
 const router = useRouter()
 
 const user = ref('Артур Хабибулин')
+
+function userLogout() {
+  logOut()
+  router.push({ name: 'Login' })
+}
 </script>
 
 <template>
@@ -45,6 +52,7 @@ const user = ref('Артур Хабибулин')
           block
           prepend-icon="mdi-logout"
           color="red-darken-4"
+          @click="userLogout"
         >
           Выйти
         </v-btn>

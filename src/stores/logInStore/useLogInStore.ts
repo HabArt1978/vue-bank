@@ -8,15 +8,17 @@ import type { Token } from './types'
 // action = function() {}
 // mutations = мутаций (mutations) больше не существуют, mutations теперь автоматически происходят при использовании action = function() {}
 
+const TOKEN_KEY = 'jwt-token'
+
 export const useLogInStore = defineStore('logIn', () => {
   // state
-  const token = ref<Token | null>(null)
+  const token = ref<Token | null>(localStorage.getItem(TOKEN_KEY))
   // computed
   const isAuthenticated = computed<boolean>(() => (token.value ? true : false))
   //  functions
   function setToken(newToken: Token): void {
     token.value = newToken
-    localStorage.setItem('jwt-token', newToken)
+    localStorage.setItem(TOKEN_KEY, newToken)
   }
 
   async function logIn(payload: LoginSchema): Promise<void> {
@@ -27,7 +29,7 @@ export const useLogInStore = defineStore('logIn', () => {
 
   function logOut(): void {
     token.value = null
-    localStorage.removeItem('jwt-token')
+    localStorage.removeItem(TOKEN_KEY)
   }
 
   return {

@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useDisplay, useTheme } from 'vuetify'
+import { useThemeStore } from '@/stores'
+import { computed } from 'vue'
+import { useDisplay } from 'vuetify'
+
+const themeStore = useThemeStore()
+const isDarkTheme = computed(() => themeStore.darkTheme)
+const toggleTheme = themeStore.toggleTheme
 
 const { mdAndUp, mobile } = useDisplay()
-const theme = useTheme()
-
-const darkTheme = ref<boolean>(false)
-function toggleTheme() {
-  darkTheme.value = !darkTheme.value
-  theme.global.name.value = darkTheme.value ? 'dark' : 'light'
-}
 </script>
 
 <template>
   <v-app-bar
-    :color="darkTheme ? 'blue-grey-darken-4' : 'primary'"
+    :color="isDarkTheme ? 'blue-grey-darken-4' : 'primary'"
     prominent
     :location="mobile ? 'bottom' : 'top'"
   >

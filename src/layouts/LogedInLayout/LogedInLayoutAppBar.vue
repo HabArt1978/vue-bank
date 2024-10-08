@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import { menuItems } from '@/assets/library/library'
-import { ref } from 'vue'
-import { useDisplay, useTheme } from 'vuetify'
+import { useThemeStore } from '@/stores'
+import { computed } from 'vue'
+import { useDisplay } from 'vuetify'
 
 const { mdAndUp, mobile } = useDisplay()
-const theme = useTheme()
 
-const darkTheme = ref<boolean>(false)
-function toggleTheme() {
-  darkTheme.value = !darkTheme.value
-  theme.global.name.value = darkTheme.value ? 'dark' : 'light'
-}
+const themeStore = useThemeStore()
+const isDarkTheme = computed(() => themeStore.darkTheme)
+const toggleTheme = themeStore.toggleTheme
 
 const emit = defineEmits<{
   (e: 'toggle-drawer'): void
@@ -19,7 +17,7 @@ const emit = defineEmits<{
 
 <template>
   <v-app-bar
-    :color="darkTheme ? 'blue-grey-darken-4' : 'primary'"
+    :color="isDarkTheme ? 'blue-grey-darken-4' : 'primary'"
     prominent
     :location="mobile ? 'bottom' : 'top'"
   >

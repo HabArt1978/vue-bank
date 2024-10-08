@@ -4,8 +4,10 @@ import { useLogInStore } from '@/stores/index'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useField, useForm, useIsFormValid } from 'vee-validate'
 import { computed, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
 const logInStore = useLogInStore()
+const router = useRouter()
 
 const { handleSubmit, errors, isSubmitting, submitCount, resetForm } = useForm({
   validationSchema: toTypedSchema(logInSchema)
@@ -31,6 +33,7 @@ const onSubmit = handleSubmit(async (userData: LoginSchema) => {
   console.table(userData)
   await logInStore.logIn(userData)
   resetForm()
+  router.push('/')
 })
 </script>
 
