@@ -2,19 +2,12 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useTheme } from 'vuetify'
 
-// state = ref()
-// getters = computed(() => {})
-// action = function() {}
-// mutations = мутаций (mutations) больше не существуют, mutations теперь автоматически происходят при использовании action = function() {}c
-
 export const useThemeStore = defineStore('theme', () => {
   const theme = useTheme()
   // Определяем системную тему
-
+  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
   // state
   const darkTheme = ref<boolean>(false)
-
-  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
 
   if (localStorage.getItem('theme') === null) {
     if (prefersDarkScheme.matches) {
