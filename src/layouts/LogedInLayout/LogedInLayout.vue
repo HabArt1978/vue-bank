@@ -8,7 +8,7 @@ const isDrawerOpen = ref(false)
 </script>
 
 <template>
-  <v-layout>
+  <v-layout class="h-100">
     <AppBar @toggle-drawer="isDrawerOpen = !isDrawerOpen" />
 
     <Drawer v-model:is-open="isDrawerOpen" />
@@ -19,4 +19,14 @@ const isDrawerOpen = ref(false)
   </v-layout>
 </template>
 
-<style scoped></style>
+<style scoped>
+.custom-scroll-hidden {
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.custom-scroll-hidden::-webkit-scrollbar {
+  display: none; /* Chrome и Safari */
+}
+</style>

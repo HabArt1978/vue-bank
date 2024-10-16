@@ -1,4 +1,6 @@
+import { logInFromApi } from '@/api/modules/auth'
 import type { LoginSchema } from '@/assets/schemas/loginSchema'
+import axios from 'axios'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type { Token } from './types'
@@ -22,8 +24,46 @@ export const useLogInStore = defineStore('logIn', () => {
   }
 
   async function logIn(payload: LoginSchema): Promise<void> {
-    // пока подставляем вместо TOKEN тестовую строку
+    const userLogInData: Omit<LoginSchema, 'remember'> = {
+      email: payload.email,
+      password: payload.password
+    }
 
+    try {
+      const { data } = await logInFromApi(userLogInData)
+      if (data) {
+        console.log('AXIOS / Response data:', data)
+      }
+    } catch (error) {
+      // Проверяем, является ли ошибка экземпляром AxiosError
+      if (axios.isAxiosError(error)) {
+        // Если есть ответ от сервера
+        if (error.response) {
+          console.error(
+            'AXIOS / Response error:',
+            error.response.status,
+            error.response.data.error.message
+          )
+        }
+        // Если запрос был сделан, но не получен ответ (например, ошибка сети)
+        else if (error.request) {
+          console.error(
+            'AXIOS / No response received:',
+            error.request,
+            error.message
+          )
+        }
+        // Если ошибка при настройке запроса (например, неправильный URL)
+        else {
+          console.error('Axios / Error setting up request:', error.message)
+        }
+      } else {
+        // Неизвестная ошибка (не связанная с Axios)
+        console.error('Unknown error:', error)
+      }
+    }
+
+    // пока подставляем вместо TOKEN тестовую строку
     setToken('TEST TOKEN')
   }
 
