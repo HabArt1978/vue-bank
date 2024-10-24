@@ -1,6 +1,7 @@
 import { logInFromApi } from '@/api/modules/auth'
+import type { UserRequestData, UserResponseData } from '@/api/modules/types'
 import type { LoginSchema } from '@/assets/schemas/loginSchema'
-import axios from 'axios'
+import { isAxiosError } from 'axios'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type { Token } from './types'
@@ -10,11 +11,11 @@ import type { Token } from './types'
 // action = function() {}
 // mutations = мутаций (mutations) больше не существуют, mutations теперь автоматически происходят при использовании action = function() {}
 
-const TOKEN_KEY = 'jwt-token'
+const TOKEN_KEY = 'jwt-token' // key for localStorage
 
 export const useLogInStore = defineStore('logIn', () => {
   // state
-  const token = ref<Token | null>(localStorage.getItem(TOKEN_KEY))
+  const token = ref<string | null>(localStorage.getItem(TOKEN_KEY))
   // computed
   const isAuthenticated = computed<boolean>(() => (token.value ? true : false))
   //  functions
@@ -24,25 +25,27 @@ export const useLogInStore = defineStore('logIn', () => {
   }
 
   async function logIn(payload: LoginSchema): Promise<void> {
-    const userLogInData: Omit<LoginSchema, 'remember'> = {
+    const userRequestData: UserRequestData = {
       email: payload.email,
       password: payload.password
     }
 
     try {
-      const { data } = await logInFromApi(userLogInData)
-      if (data) {
-        console.log('AXIOS / Response data:', data)
+      const response = await logInFromApi(userRequestData)
+      const userData: UserResponseData = response.data
+      if (userData) {
+        console.log('AXIOS / Response data:', userData)
+        setToken(userData.idToken)
       }
-    } catch (error) {
+    } catch (error: unknown) {
       // Проверяем, является ли ошибка экземпляром AxiosError
-      if (axios.isAxiosError(error)) {
+      if (isAxiosError<{ error?: { message: string } }>(error)) {
         // Если есть ответ от сервера
         if (error.response) {
           console.error(
             'AXIOS / Response error:',
             error.response.status,
-            error.response.data.error.message
+            error.response.data.error?.message
           )
         }
         // Если запрос был сделан, но не получен ответ (например, ошибка сети)
@@ -62,9 +65,6 @@ export const useLogInStore = defineStore('logIn', () => {
         console.error('Unknown error:', error)
       }
     }
-
-    // пока подставляем вместо TOKEN тестовую строку
-    setToken('TEST TOKEN')
   }
 
   function logOut(): void {
