@@ -32,10 +32,10 @@ export const useLogInStore = defineStore('logIn', () => {
 
     try {
       const response = await logInFromApi(userRequestData)
-      const userData: UserResponseData = response.data
-      if (userData) {
-        console.log('AXIOS / Response data:', userData)
-        setToken(userData.idToken)
+      const userResponseData: UserResponseData = response.data
+      if (userResponseData) {
+        console.log('AXIOS / Response data:', userResponseData)
+        setToken(userResponseData.idToken)
       }
     } catch (error: unknown) {
       // Проверяем, является ли ошибка экземпляром AxiosError
