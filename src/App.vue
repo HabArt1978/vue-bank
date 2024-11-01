@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { useLogInStore } from '@/stores/index'
 import { storeToRefs } from 'pinia'
-import LogInLayout from './layouts/LogedInLayout/LogedInLayout.vue'
+import LoggedInLayout from './layouts/LoggedInLayout/LoggedInLayout.vue'
 import MainLayout from './layouts/MainLayout/MainLayout.vue'
 
 const { isAuthenticated } = storeToRefs(useLogInStore())
 </script>
 
 <template>
-  <LogInLayout v-if="isAuthenticated">
+  <LoggedInLayout v-if="isAuthenticated">
     <router-view v-slot="{ Component }">
       <v-fade-transition :hide-on-leave="true">
         <component :is="Component" />
       </v-fade-transition>
     </router-view>
-  </LogInLayout>
+  </LoggedInLayout>
 
   <MainLayout v-else>
     <router-view v-slot="{ Component }">
