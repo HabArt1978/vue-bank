@@ -1,6 +1,7 @@
 import { logInFromApi } from '@/api/modules/auth'
 import type { UserRequestData, UserResponseData } from '@/api/modules/types'
 import type { LoginSchema } from '@/assets/schemas/loginSchema'
+import { useAlertStore } from '@/stores/index'
 import { isAxiosError } from 'axios'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
@@ -14,6 +15,7 @@ import type { Token } from './types'
 const TOKEN_KEY = 'jwt-token' // key for localStorage
 
 export const useLogInStore = defineStore('logIn', () => {
+  const { setAlertMessage } = useAlertStore()
   // state
   const token = ref<string | null>(localStorage.getItem(TOKEN_KEY))
   // computed
@@ -35,18 +37,28 @@ export const useLogInStore = defineStore('logIn', () => {
       const userResponseData: UserResponseData = response.data
       if (userResponseData) {
         console.log('AXIOS / Response data:', userResponseData)
+        setAlertMessage({
+          message: `Пользователь ${userResponseData.email} вошёл в систему`,
+          messageType: 'success'
+        })
         setToken(userResponseData.idToken)
+        // `Пользователь ${userResponseData.email} вошёл в систему`
       }
     } catch (error: unknown) {
       // Проверяем, является ли ошибка экземпляром AxiosError
       if (isAxiosError<{ error?: { message: string } }>(error)) {
         // Если есть ответ от сервера
         if (error.response) {
-          console.error(
-            'AXIOS / Response error:',
-            error.response.status,
-            error.response.data.error?.message
-          )
+          const errorStatus = error.response.status
+          const errorMessage = error.response.data.error?.message
+
+          console.error('AXIOS / Response error:', errorStatus, errorMessage)
+
+          errorMessage &&
+            setAlertMessage({
+              message: errorMessage,
+              messageType: 'error'
+            })
         }
         // Если запрос был сделан, но не получен ответ (например, ошибка сети)
         else if (error.request) {

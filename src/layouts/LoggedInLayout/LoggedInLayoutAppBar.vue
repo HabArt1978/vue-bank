@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { menuItems } from '@/assets/library/library'
-import { useThemeStore } from '@/stores'
+import { useThemeStore } from '@/stores/index'
 import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 

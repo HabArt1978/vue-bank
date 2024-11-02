@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useThemeStore } from '@/stores'
+import { useThemeStore } from '@/stores/index'
 import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 

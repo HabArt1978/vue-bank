@@ -1,4 +1,4 @@
-import { useLogInStore } from '@/stores/logInStore/useLogInStore'
+import { useLogInStore } from '@/stores/index'
 import type {
   NavigationGuardNext,
   RouteLocationNormalized,
