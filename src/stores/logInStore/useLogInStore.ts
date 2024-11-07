@@ -15,7 +15,7 @@ import type { Token } from './types'
 const TOKEN_KEY = 'jwt-token' // key for localStorage
 
 export const useLogInStore = defineStore('logIn', () => {
-  const { setAlertMessage } = useAlertStore()
+  const { setAlert } = useAlertStore()
   // state
   const token = ref<string | null>(localStorage.getItem(TOKEN_KEY))
   // computed
@@ -37,12 +37,13 @@ export const useLogInStore = defineStore('logIn', () => {
       const userResponseData: UserResponseData = response.data
       if (userResponseData) {
         console.log('AXIOS / Response data:', userResponseData)
-        setAlertMessage({
+        setAlert({
           message: `Пользователь ${userResponseData.email} вошёл в систему`,
-          messageType: 'success'
+          messageType: 'success',
+          alertTitle: 'Успешно!',
+          alertColor: 'green'
         })
         setToken(userResponseData.idToken)
-        // `Пользователь ${userResponseData.email} вошёл в систему`
       }
     } catch (error: unknown) {
       // Проверяем, является ли ошибка экземпляром AxiosError
@@ -55,26 +56,56 @@ export const useLogInStore = defineStore('logIn', () => {
           console.error('AXIOS / Response error:', errorStatus, errorMessage)
 
           errorMessage &&
-            setAlertMessage({
+            setAlert({
               message: errorMessage,
-              messageType: 'error'
+              messageType: 'error',
+              alertTitle: 'Ошибка!',
+              alertColor: 'red'
             })
         }
         // Если запрос был сделан, но не получен ответ (например, ошибка сети)
         else if (error.request) {
+          const errorRequest = error.request
+          const errorMessage = error.message
+
+          const requestErrorMessage = `Ошибка запроса: ${errorRequest}, сообщение об ошибке: ${errorMessage}`
+
           console.error(
             'AXIOS / No response received:',
             error.request,
             error.message
           )
+
+          setAlert({
+            message: requestErrorMessage,
+            messageType: 'error',
+            alertTitle: 'Ошибка!',
+            alertColor: 'red'
+          })
         }
         // Если ошибка при настройке запроса (например, неправильный URL)
         else {
           console.error('Axios / Error setting up request:', error.message)
+
+          error.message &&
+            setAlert({
+              message: error.message,
+              messageType: 'error',
+              alertTitle: 'Ошибка!',
+              alertColor: 'red'
+            })
         }
       } else {
         // Неизвестная ошибка (не связанная с Axios)
         console.error('Unknown error:', error)
+
+        error &&
+          setAlert({
+            message: `Неопознанная ошибка: ${error}`,
+            messageType: 'error',
+            alertTitle: 'Ошибка!',
+            alertColor: 'red'
+          })
       }
     }
   }

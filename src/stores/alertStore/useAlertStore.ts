@@ -1,15 +1,14 @@
-import type { AlertMessage } from '@/components/UI/TheAlert/types'
+import type { Alert } from '@/stores/alertStore/types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useAlertStore = defineStore('alert', () => {
-  const alertMessage = ref<AlertMessage>(null)
+  const alertPayload = ref<Alert>(null)
 
-  const setAlertMessage = (payload: AlertMessage) =>
-    (alertMessage.value = payload)
+  const setAlert = (payload: Alert) => (alertPayload.value = payload)
 
   return {
-    alertMessage,
-    setAlertMessage
+    alertPayload,
+    setAlert
   }
 })
