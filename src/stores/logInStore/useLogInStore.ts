@@ -18,13 +18,20 @@ export const useLogInStore = defineStore('logIn', () => {
   const { setAlert } = useAlertStore()
   // state
   const token = ref<string | null>(localStorage.getItem(TOKEN_KEY))
+  const authenticationError = ref<boolean>(false)
   // computed
   const isAuthenticated = computed<boolean>(() => (token.value ? true : false))
+  const isAuthenticationError = computed<boolean>(
+    () => authenticationError.value
+  )
   //  functions
   function setToken(newToken: Token): void {
     token.value = newToken
     localStorage.setItem(TOKEN_KEY, newToken)
   }
+
+  const setAuthenticationError = (payload: boolean) =>
+    (authenticationError.value = payload)
 
   async function logIn(payload: LoginSchema): Promise<void> {
     const userRequestData: UserRequestData = {
@@ -37,6 +44,9 @@ export const useLogInStore = defineStore('logIn', () => {
       const userResponseData: UserResponseData = response.data
       if (userResponseData) {
         console.log('AXIOS / Response data:', userResponseData)
+
+        isAuthenticationError.value && setAuthenticationError(false)
+
         setAlert({
           message: `Пользователь ${userResponseData.email} вошёл в систему`,
           messageType: 'success',
@@ -54,6 +64,8 @@ export const useLogInStore = defineStore('logIn', () => {
           const errorMessage = error.response.data.error?.message
 
           console.error('AXIOS / Response error:', errorStatus, errorMessage)
+
+          setAuthenticationError(true)
 
           errorMessage &&
             setAlert({
@@ -76,6 +88,8 @@ export const useLogInStore = defineStore('logIn', () => {
             error.message
           )
 
+          setAuthenticationError(true)
+
           setAlert({
             message: requestErrorMessage,
             messageType: 'error',
@@ -86,6 +100,8 @@ export const useLogInStore = defineStore('logIn', () => {
         // Если ошибка при настройке запроса (например, неправильный URL)
         else {
           console.error('Axios / Error setting up request:', error.message)
+
+          setAuthenticationError(true)
 
           error.message &&
             setAlert({
@@ -98,6 +114,8 @@ export const useLogInStore = defineStore('logIn', () => {
       } else {
         // Неизвестная ошибка (не связанная с Axios)
         console.error('Unknown error:', error)
+
+        setAuthenticationError(true)
 
         error &&
           setAlert({
@@ -112,14 +130,18 @@ export const useLogInStore = defineStore('logIn', () => {
 
   function logOut(): void {
     token.value = null
+    authenticationError.value = false
+
     localStorage.removeItem(TOKEN_KEY)
   }
 
   return {
     token,
     isAuthenticated,
+    isAuthenticationError,
     logIn,
     setToken,
+    setAuthenticationError,
     logOut
   }
 })

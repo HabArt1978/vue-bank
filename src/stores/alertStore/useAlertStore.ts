@@ -3,12 +3,12 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useAlertStore = defineStore('alert', () => {
-  const alertPayload = ref<Alert>(null)
+  const alert = ref<Alert>(null)
 
-  const setAlert = (payload: Alert) => (alertPayload.value = payload)
+  const setAlert = (payload: Alert) => (alert.value = payload)
 
   return {
-    alertPayload,
+    alert,
     setAlert
   }
 })

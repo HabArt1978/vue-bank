@@ -3,7 +3,7 @@ import { useAlertStore } from '@/stores/index'
 import { computed } from 'vue'
 
 const alertStore = useAlertStore()
-const alert = computed(() => alertStore.alertPayload)
+const alert = computed(() => alertStore.alert)
 const setAlert = alertStore.setAlert
 const isAlertVisible = computed(() => (alert.value ? true : false))
 </script>
@@ -11,6 +11,7 @@ const isAlertVisible = computed(() => (alert.value ? true : false))
 <template>
   <v-alert
     v-model="isAlertVisible"
+    transition="slide-y-transition"
     :title="alert?.alertTitle"
     :type="alert?.messageType"
     border="start"

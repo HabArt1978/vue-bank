@@ -1,4 +1,4 @@
-import { useLogInStore } from '@/stores/index'
+import { useAlertStore, useLogInStore } from '@/stores/index'
 import type {
   NavigationGuardNext,
   RouteLocationNormalized,
@@ -68,13 +68,23 @@ router.beforeEach(
     from: RouteLocationNormalized,
     next: NavigationGuardNext
   ) => {
-    const { isAuthenticated } = useLogInStore()
+    const { isAuthenticated, isAuthenticationError } = useLogInStore()
+    const { setAlert } = useAlertStore()
     const requireAuth = to.meta.auth
 
     if (requireAuth && isAuthenticated) {
       next()
     } else if (requireAuth && !isAuthenticated) {
-      next({ name: 'Login' })
+      next('/login')
+
+      if (!isAuthenticationError && !isAuthenticated) {
+        setAlert({
+          message: 'Пройдите авторизацию пользователя',
+          alertColor: 'blue',
+          alertTitle: 'Информация!',
+          messageType: 'info'
+        })
+      }
     } else {
       next()
     }

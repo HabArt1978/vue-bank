@@ -9,7 +9,10 @@ const { isAuthenticated } = storeToRefs(useLogInStore())
 </script>
 
 <template>
-  <TheAlert />
+  <v-expand-transition>
+    <TheAlert />
+  </v-expand-transition>
+
   <LoggedInLayout v-if="isAuthenticated">
     <router-view v-slot="{ Component }">
       <v-fade-transition :hide-on-leave="true">
