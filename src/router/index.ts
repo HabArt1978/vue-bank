@@ -77,14 +77,13 @@ router.beforeEach(
     } else if (requireAuth && !isAuthenticated) {
       next('/login')
 
-      if (!isAuthenticationError && !isAuthenticated) {
+      !isAuthenticationError &&
         setAlert({
           message: 'Пройдите авторизацию пользователя',
           alertColor: 'blue',
           alertTitle: 'Информация!',
           messageType: 'info'
         })
-      }
     } else {
       next()
     }

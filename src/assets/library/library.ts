@@ -2,7 +2,7 @@ import type { DrawerItems, MenuItems } from './types'
 
 const drawerItems: DrawerItems = [
   {
-    title: 'Заявки',
+    title: 'Список заявок',
     value: 'Orders',
     icon: 'mdi-receipt-text-edit-outline'
   },

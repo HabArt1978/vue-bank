@@ -1,16 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ThePageCardContainer from '@/components/ThePageCardContainer/ThePageCardContainer.vue'
+</script>
 
 <template>
-  <v-card-text>
-    <h1 style="color: red">ORDERS VIEW</h1>
+  <ThePageCardContainer title="Список заявок">
+    <template #header-button>
+      <v-btn
+        variant="outlined"
+        class="my-auto"
+      >
+        <p class="font-weight-bold">Добавить</p>
+      </v-btn>
+    </template>
 
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur hic
-      velit mollitia. Quod similique vero veritatis? Exercitationem sequi esse
-      temporibus, incidunt placeat laboriosam distinctio est corporis, at qui
-      sit architecto reprehenderit debitis facilis ipsam. Quidem dicta illum
-      totam, quam animi iste ab id doloremque recusandae voluptas nemo numquam,
-      asperiores enim.
-    </p>
-  </v-card-text>
+    <div>
+      <p class="font-weight-bold">Текущий список заявок</p>
+    </div>
+  </ThePageCardContainer>
 </template>
