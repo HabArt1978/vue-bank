@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ThePageCardContainer from '@/components/ThePageCardContainer/ThePageCardContainer.vue'
+import TheRequestTable from '@/components/request/TheRequestTable/TheRequestTable.vue'
 </script>
 
 <template>
@@ -13,8 +14,6 @@ import ThePageCardContainer from '@/components/ThePageCardContainer/ThePageCardC
       </v-btn>
     </template>
 
-    <div>
-      <p class="font-weight-bold">Текущий список заявок</p>
-    </div>
+    <TheRequestTable />
   </ThePageCardContainer>
 </template>
