@@ -19,6 +19,7 @@ const isAlertVisible = computed(() => (alert.value ? true : false))
     class="alertContainer"
   >
     <p class="breakAllWord">{{ alert?.message }}</p>
+
     <template #close>
       <v-btn
         icon="mdi-close"
@@ -43,7 +44,7 @@ const isAlertVisible = computed(() => (alert.value ? true : false))
 .alertCloseButton {
   position: relative;
   top: -10px;
-  right: -10px;
+  right: -8px;
 }
 
 .breakAllWord {

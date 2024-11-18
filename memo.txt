@@ -1,5 +1,6 @@
 pnpm add @mdi/font -D
 pnpm add vee-validate zod @vee-validate/zod
+pnpm add -g pnpm / данная команда устанавливает (или обновляет) сам pnpm глобально. Это полезно для обновления до последней версии pnpm, если он уже установлен, или для установки, если его ещё нет в системе
 
 login: admin@mail/ru
 password: 12345678

@@ -14,6 +14,6 @@ import TheRequestTable from '@/components/request/TheRequestTable/TheRequestTabl
       </v-btn>
     </template>
 
-    <TheRequestTable />
+    <TheRequestTable :clients-data="[]" />
   </ThePageCardContainer>
 </template>
