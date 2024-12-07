@@ -6,7 +6,7 @@ export const useThemeStore = defineStore('theme', () => {
   const theme = useTheme()
   // Определяем системную тему
   const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
-  // state
+
   const darkTheme = ref<boolean>(false)
 
   if (localStorage.getItem('theme') === null) {
@@ -29,7 +29,6 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
-  //  functions
   function toggleTheme() {
     darkTheme.value = !darkTheme.value
     theme.global.name.value = darkTheme.value ? 'dark' : 'light'

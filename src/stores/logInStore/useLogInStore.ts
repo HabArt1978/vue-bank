@@ -19,6 +19,7 @@ export const useLogInStore = defineStore('logIn', () => {
   // state
   const token = ref<string | null>(localStorage.getItem(TOKEN_KEY))
   const authenticationError = ref<boolean>(false)
+
   // computed
   const isAuthenticated = computed<boolean>(() => (token.value ? true : false))
   const isAuthenticationError = computed<boolean>(
