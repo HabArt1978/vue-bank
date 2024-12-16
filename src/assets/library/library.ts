@@ -3,7 +3,7 @@ import type { DrawerItems, MenuItems } from './types'
 const drawerItems: DrawerItems = [
   {
     title: 'Список заявок',
-    value: 'Orders',
+    value: 'ListOfRequests',
     icon: 'mdi-receipt-text-edit-outline'
   },
   {

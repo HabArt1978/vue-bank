@@ -11,7 +11,6 @@ const isAlertVisible = computed(() => (alert.value ? true : false))
 <template>
   <v-alert
     v-model="isAlertVisible"
-    transition="slide-y-transition"
     :title="alert?.alertTitle"
     :type="alert?.messageType"
     border="start"

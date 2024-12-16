@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TheRequestTable from '@/components/request/TheRequestTable/TheRequestTable.vue'
 import ThePageCardContainer from '@/components/ThePageCardContainer/ThePageCardContainer.vue'
-import TheModalForOrders from '@/components/UI/Modals/TheModalForOrders.vue'
+import TheModalForSubmitRequest from '@/components/UI/Modals/TheModalForSubmitRequest.vue'
 import { useModalStore } from '@/stores/index'
 import { computed } from 'vue'
 
@@ -16,7 +16,7 @@ const setModal = modalStore.setModal
     defer
     to="body"
   >
-    <TheModalForOrders />
+    <TheModalForSubmitRequest />
   </Teleport>
 
   <ThePageCardContainer title="Список заявок">

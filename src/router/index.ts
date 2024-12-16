@@ -9,8 +9,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Orders',
-    component: () => import('../views/OrdersView.vue'),
+    name: 'ListOfRequests',
+    component: () => import('../views/ListOfRequestsView.vue'),
     meta: {
       auth: true
     }
