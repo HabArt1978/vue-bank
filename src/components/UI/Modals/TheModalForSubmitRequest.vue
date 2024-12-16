@@ -5,19 +5,21 @@ import {
 } from '@/assets/schemas/submitRequestSchema'
 import { useModalStore } from '@/stores/index'
 import { toTypedSchema } from '@vee-validate/zod'
-import { useField, useForm } from 'vee-validate'
+import { useField, useForm, useIsFormValid } from 'vee-validate'
 import { computed } from 'vue'
 
 const modalStore = useModalStore()
 const isModalActive = computed(() => modalStore.modal)
 const setModal = modalStore.setModal
 
-const { handleSubmit, errors, resetForm } = useForm({
+const { handleSubmit, errors, resetForm, isSubmitting } = useForm({
   validationSchema: toTypedSchema(submitRequestSchema),
   initialValues: {
     status: undefined
   }
 })
+
+const isValid = useIsFormValid()
 
 const { value: lastName } = useField('lastName')
 const { value: firstName } = useField('firstName')
@@ -156,6 +158,7 @@ const onSubmit = handleSubmit(
                 text="Создать"
                 variant="tonal"
                 type="submit"
+                :disabled="!isValid || isSubmitting"
               />
             </v-card-actions>
           </v-form>
