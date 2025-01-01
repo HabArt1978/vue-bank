@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { drawerItems } from '@/assets/library/library'
 import { useLogInStore } from '@/stores/index'
-import { defineModel, ref } from 'vue'
+import { computed, defineModel, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
 
@@ -12,6 +12,11 @@ const { mobile } = useDisplay()
 const router = useRouter()
 
 const user = ref('Артур Хабибулин')
+
+const activeLinks = computed({
+  get: () => [router.currentRoute.value.name],
+  set: () => {}
+})
 
 function userLogout() {
   logOut()
@@ -34,10 +39,11 @@ function userLogout() {
 
     <v-divider />
 
-    <v-list>
+    <v-list v-model:selected="activeLinks">
       <v-list-item
         v-for="(item, idx) in drawerItems"
         :key="idx"
+        color="primary"
         :prepend-icon="item.icon"
         :title="item.title"
         :value="item.value"
