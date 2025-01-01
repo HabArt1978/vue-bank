@@ -1,17 +1,11 @@
 import { z } from 'zod'
-import {
-  emailMinLength,
-  miniumOneMark,
-  nameMaxLength,
-  nameMinLength
-} from './constants'
+import { emailMinLength, nameMaxLength, nameMinLength } from './constants'
 
 export const orderStatuses = ['Принято', 'В обработке', 'Отклонено']
 
 export const submitRequestSchema = z.object({
   lastName: z
-    .string()
-    .min(miniumOneMark, 'Поле обязательное для заполнения')
+    .string({ message: 'Поле обязательное для заполнения' })
     .min(
       nameMinLength,
       `Фамилия пользователя должна содержать не менее ${nameMinLength} символов`
@@ -25,8 +19,7 @@ export const submitRequestSchema = z.object({
       'Фамилия пользователя может содержать только буквы'
     ),
   firstName: z
-    .string()
-    .min(miniumOneMark, 'Поле обязательное для заполнения')
+    .string({ message: 'Поле обязательное для заполнения' })
     .min(
       nameMinLength,
       `Имя пользователя должно содержать не менее ${nameMinLength} символов`
@@ -40,8 +33,7 @@ export const submitRequestSchema = z.object({
       'Имя пользователя может содержать только буквы'
     ),
   middleName: z
-    .string()
-    .min(miniumOneMark, 'Поле обязательное для заполнения')
+    .string({ message: 'Поле обязательное для заполнения' })
     .max(
       nameMaxLength,
       `Отчество пользователя не может содержать более ${nameMaxLength} символов`
@@ -52,23 +44,21 @@ export const submitRequestSchema = z.object({
     )
     .optional(),
   phone: z
-    .string()
-    .min(miniumOneMark, 'Поле обязательное для заполнения')
+    .string({ message: 'Поле обязательное для заполнения' })
     .regex(
       /^\+7-\d{3}-\d{3}-\d{2}-\d{2}$/,
       'Номер телефона должен быть в формате +7-XXX-XXX-XX-XX, где X — цифра'
     ),
   email: z
-    .string()
+    .string({ message: 'Поле обязательное для заполнения' })
     .trim()
-    .min(miniumOneMark, 'Поле обязательное для заполнения!')
     .min(
       emailMinLength,
       `Почта пользователя должна содержать не менее ${emailMinLength} символов`
     )
     .email('Введите корректный адрес электронной почты!'),
   amount: z
-    .string()
+    .string({ message: 'Поле обязательное для заполнения' })
     .regex(/^\d+$/, 'Введите только цифры')
     .transform((val) => parseInt(val, 10)) // Преобразуем в число
     .refine((val) => val >= 10000, {
@@ -77,8 +67,10 @@ export const submitRequestSchema = z.object({
     .refine((val) => val <= 1000000, {
       message: 'Сумма должна быть не более 1,000,000 руб'
     }),
-  status: z.string().refine((value) => orderStatuses.includes(value), {
-    message: 'Пожалуйста, выберите статус заявки!'
-  })
+  status: z
+    .string({ message: 'Поле обязательное для заполнения' })
+    .refine((value) => orderStatuses.includes(value), {
+      message: 'Пожалуйста, выберите допустимый статус заявки!'
+    })
 })
 export type SubmitRequestSchema = z.infer<typeof submitRequestSchema>

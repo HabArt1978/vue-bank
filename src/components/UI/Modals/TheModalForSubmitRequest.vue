@@ -17,12 +17,12 @@ const { setModal } = modalStore
 const { handleSubmit, errors, resetForm } = useForm({
   validationSchema: toTypedSchema(submitRequestSchema),
   initialValues: {
-    lastName: '',
-    firstName: '',
-    middleName: '',
-    phone: '',
-    email: '',
-    amount: '',
+    lastName: undefined,
+    firstName: undefined,
+    middleName: undefined,
+    phone: undefined,
+    email: undefined,
+    amount: undefined,
     status: undefined
   }
 })
@@ -154,14 +154,11 @@ const onSubmit = handleSubmit(
               id="status"
               v-model="status"
               name="status"
-              :items="orderStatuses"
+              :items="[...orderStatuses, 'Nechto']"
               label="Статус заявки *"
               variant="outlined"
               density="comfortable"
-              :error="!!errors.status"
-              :error-messages="
-                errors.status && 'Пожалуйста, выберите статус заявки!'
-              "
+              :error-messages="errors.status"
             />
 
             <small class="text-caption text-medium-emphasis"

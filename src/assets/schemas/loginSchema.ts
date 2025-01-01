@@ -1,25 +1,18 @@
 import { z } from 'zod'
-import {
-  emailMinLength,
-  miniumOneMark,
-  passMaxLength,
-  passMinLength
-} from './constants'
+import { emailMinLength, passMaxLength, passMinLength } from './constants'
 
 export const logInSchema = z.object({
   email: z
-    .string()
+    .string({ message: 'Поле обязательно для заполнения!' })
     .trim()
-    .min(miniumOneMark, 'Поле обязательное для заполнения!')
     .min(
       emailMinLength,
       `Почта пользователя должна содержать не менее ${emailMinLength} символов`
     )
     .email('Электронная почта имеет невалидное значение!'),
   password: z
-    .string()
+    .string({ message: 'Поле обязательно для заполнения!' })
     .trim()
-    .min(miniumOneMark, 'Поле обязательное для заполнения!')
     .min(
       passMinLength,
       `Пароль должен содержать не менее ${passMinLength} символов!`

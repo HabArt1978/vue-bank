@@ -8,5 +8,3 @@ export const passMinLength: number = 8
 export const passMaxLength: number = 30
 
 export const emailMinLength: number = 6
-
-export const miniumOneMark: number = 1
