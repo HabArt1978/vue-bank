@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <h4
     v-if="!clientsData.length"
-    class="text-center"
+    class="text-center text-grey-darken-2"
   >
     Заявок пока нет
   </h4>

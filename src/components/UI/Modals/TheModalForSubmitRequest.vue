@@ -1,25 +1,30 @@
 <script setup lang="ts">
 import {
+  orderStatuses,
   submitRequestSchema,
   type SubmitRequestSchema
 } from '@/assets/schemas/submitRequestSchema'
 import { useModalStore } from '@/stores/index'
 import { toTypedSchema } from '@vee-validate/zod'
-import { useField, useForm, useIsFormValid } from 'vee-validate'
-import { computed } from 'vue'
+import { useField, useForm } from 'vee-validate'
+import { computed, ref, watch } from 'vue'
 
 const modalStore = useModalStore()
 const isModalActive = computed(() => modalStore.modal)
 const setModal = modalStore.setModal
 
-const { handleSubmit, errors, resetForm, isSubmitting } = useForm({
+const { handleSubmit, errors, resetForm } = useForm({
   validationSchema: toTypedSchema(submitRequestSchema),
   initialValues: {
+    lastName: '',
+    firstName: '',
+    middleName: '',
+    phone: '',
+    email: '',
+    amount: '',
     status: undefined
   }
 })
-
-const isValid = useIsFormValid()
 
 const { value: lastName } = useField('lastName')
 const { value: firstName } = useField('firstName')
@@ -29,10 +34,23 @@ const { value: email } = useField('email')
 const { value: amount } = useField('amount')
 const { value: status } = useField('status')
 
-const orderStatuses = ['Option 1', 'Option 2', 'Option 3']
+const formattedAmount = ref<string>('')
+
+watch(amount, (newAmount) => {
+  const amountAsNumber = Number(newAmount)
+
+  const formatCurrency = new Intl.NumberFormat('ru-Ru', {
+    style: 'currency',
+    currency: 'RUB'
+    // minimumFractionDigits: 0
+  })
+
+  formattedAmount.value = formatCurrency.format(amountAsNumber)
+})
 
 const onSubmit = handleSubmit(
   async (submitRequestData: SubmitRequestSchema) => {
+    alert(JSON.stringify(submitRequestData, null, 2))
     setModal(false)
     console.table(submitRequestData)
     resetForm()
@@ -49,6 +67,7 @@ const onSubmit = handleSubmit(
       <v-card
         prepend-icon="mdi-receipt-text-plus"
         title="Создать заявку"
+        class="text-blue-darken-3"
       >
         <v-card-text>
           <v-form
@@ -63,7 +82,6 @@ const onSubmit = handleSubmit(
               name="lastName"
               type="text"
               label="Фамилия *"
-              :required="false"
               autofocus
               :error-messages="errors.lastName"
               class="marginBottom"
@@ -120,10 +138,16 @@ const onSubmit = handleSubmit(
               type="number"
               min="10000"
               max="1000000"
-              step="1"
               :error-messages="errors.amount"
               class="marginBottom"
             />
+
+            <div
+              v-if="formattedAmount.length !== 0"
+              style="color: white; border: dashed red; margin-bottom: 10px"
+            >
+              {{ formattedAmount }}
+            </div>
 
             <v-select
               id="status"
@@ -132,10 +156,11 @@ const onSubmit = handleSubmit(
               :items="orderStatuses"
               label="Статус заявки *"
               variant="outlined"
-              clearable
+              density="comfortable"
               :error="!!errors.status"
-              :errors-message="errors.status"
-              class="marginBottom"
+              :error-messages="
+                !!errors.status && 'Пожалуйста, выберите статус заявки!'
+              "
             />
 
             <small class="text-caption text-medium-emphasis"
@@ -158,7 +183,6 @@ const onSubmit = handleSubmit(
                 text="Создать"
                 variant="tonal"
                 type="submit"
-                :disabled="!isValid || isSubmitting"
               />
             </v-card-actions>
           </v-form>

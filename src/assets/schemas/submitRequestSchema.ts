@@ -6,6 +6,8 @@ import {
   nameMinLength
 } from './constants'
 
+export const orderStatuses = ['Принято', 'В обработке', 'Отклонено']
+
 export const submitRequestSchema = z.object({
   lastName: z
     .string()
@@ -39,10 +41,7 @@ export const submitRequestSchema = z.object({
     ),
   middleName: z
     .string()
-    .min(
-      nameMinLength,
-      `Отчество пользователя должно содержать не менее ${nameMaxLength}символов`
-    )
+    .min(miniumOneMark, 'Поле обязательное для заполнения')
     .max(
       nameMaxLength,
       `Отчество пользователя не может содержать более ${nameMaxLength} символов`
@@ -70,17 +69,16 @@ export const submitRequestSchema = z.object({
     .email('Введите корректный адрес электронной почты!'),
   amount: z
     .string()
-    .min(miniumOneMark, 'Поле обязательное для заполнения!')
-    .transform((value) => {
-      const parsed = Number(value)
-      if (isNaN(parsed)) throw new Error('Invalid number')
-      return parsed
+    .regex(/^\d+$/, 'Введите только цифры')
+    .transform((val) => parseInt(val, 10)) // Преобразуем в число
+    .refine((val) => val >= 10000, {
+      message: 'Сумма должна быть не менее 10,000 руб'
     })
-    .refine((value) => value >= 10000 && value <= 1000000, {
-      message: 'Значение должно быть от 10 000 до 1 000 000'
+    .refine((val) => val <= 1000000, {
+      message: 'Сумма должна быть не более 1,000,000 руб'
     }),
-  status: z.enum(['Option 1', 'Option 2', 'Option 3'], {
-    message: 'Пожалуйста, определите статус заявки'
+  status: z.string().refine((value) => orderStatuses.includes(value), {
+    message: 'Пожалуйста, выберите статус заявки!'
   })
 })
 export type SubmitRequestSchema = z.infer<typeof submitRequestSchema>

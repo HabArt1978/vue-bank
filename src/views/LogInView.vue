@@ -52,6 +52,7 @@ const onSubmit = handleSubmit(async (userData: LoginSchema) => {
       >
 
       <v-form
+        id="login"
         fast-fail
         @submit.prevent="onSubmit"
       >

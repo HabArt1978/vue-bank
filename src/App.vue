@@ -29,3 +29,15 @@ const { isAuthenticated } = storeToRefs(useLogInStore())
     </router-view>
   </MainLayout>
 </template>
+
+<style scoped>
+.custom-scroll-hidden {
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.custom-scroll-hidden::-webkit-scrollbar {
+  display: none; /* Chrome и Safari */
+}
+</style>
