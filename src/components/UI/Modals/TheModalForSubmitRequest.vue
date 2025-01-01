@@ -160,7 +160,7 @@ const onSubmit = handleSubmit(
               density="comfortable"
               :error="!!errors.status"
               :error-messages="
-                !!errors.status && 'Пожалуйста, выберите статус заявки!'
+                errors.status && 'Пожалуйста, выберите статус заявки!'
               "
             />
 

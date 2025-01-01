@@ -3,33 +3,32 @@ import TheRequestTable from '@/components/request/TheRequestTable/TheRequestTabl
 import ThePageCardContainer from '@/components/ThePageCardContainer/ThePageCardContainer.vue'
 import TheModalForSubmitRequest from '@/components/UI/Modals/TheModalForSubmitRequest.vue'
 import { useModalStore } from '@/stores/index'
-import { computed } from 'vue'
 
 const modalStore = useModalStore()
-const isModalActive = computed(() => modalStore.modal)
 const setModal = modalStore.setModal
 </script>
 
 <template>
-  <Teleport
-    v-if="isModalActive"
-    defer
-    to="body"
-  >
-    <TheModalForSubmitRequest />
-  </Teleport>
+  <div>
+    <Teleport
+      defer
+      to="body"
+    >
+      <TheModalForSubmitRequest />
+    </Teleport>
 
-  <ThePageCardContainer title="Список заявок">
-    <template #header-button>
-      <v-btn
-        variant="outlined"
-        class="my-auto"
-        @click="setModal(true)"
-      >
-        <p class="font-weight-bold">Добавить</p>
-      </v-btn>
-    </template>
+    <ThePageCardContainer title="Список заявок">
+      <template #header-button>
+        <v-btn
+          variant="outlined"
+          class="my-auto"
+          @click="setModal(true)"
+        >
+          <p class="font-weight-bold">Добавить</p>
+        </v-btn>
+      </template>
 
-    <TheRequestTable :clients-data="[]" />
-  </ThePageCardContainer>
+      <TheRequestTable :clients-data="[]" />
+    </ThePageCardContainer>
+  </div>
 </template>
