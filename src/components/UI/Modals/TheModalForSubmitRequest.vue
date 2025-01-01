@@ -6,12 +6,13 @@ import {
 } from '@/assets/schemas/submitRequestSchema'
 import { useModalStore } from '@/stores/index'
 import { toTypedSchema } from '@vee-validate/zod'
+import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 const modalStore = useModalStore()
-const isModalActive = computed(() => modalStore.modal)
-const setModal = modalStore.setModal
+const { modal: isModalActive } = storeToRefs(modalStore)
+const { setModal } = modalStore
 
 const { handleSubmit, errors, resetForm } = useForm({
   validationSchema: toTypedSchema(submitRequestSchema),

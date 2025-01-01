@@ -31,9 +31,11 @@ watch(isTooManyAttempts, (val) => {
 
 const onSubmit = handleSubmit(async (userData: LoginSchema) => {
   console.table(userData)
-  await logInStore.logIn(userData)
-  resetForm()
-  router.push('/')
+  const isSuccessful = await logInStore.logIn(userData)
+  if (isSuccessful) {
+    resetForm()
+    router.push('/')
+  }
 })
 </script>
 
@@ -48,8 +50,9 @@ const onSubmit = handleSubmit(async (userData: LoginSchema) => {
       <v-card-title
         class="text-center text-h4 text-blue-darken-3"
         style="user-select: none"
-        >Авторизация</v-card-title
       >
+        Авторизация
+      </v-card-title>
 
       <v-form
         id="login"
@@ -87,7 +90,7 @@ const onSubmit = handleSubmit(async (userData: LoginSchema) => {
           autocomplete="off"
           :append-inner-icon="isVisible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="isVisible ? 'text' : 'password'"
-          label="Password"
+          label="Пароль"
           placeholder="Введите пароль"
           prepend-inner-icon="mdi-lock-outline"
           :error-messages="errors.password"

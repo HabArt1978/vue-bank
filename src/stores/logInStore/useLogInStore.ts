@@ -34,7 +34,7 @@ export const useLogInStore = defineStore('logIn', () => {
   const setAuthenticationError = (payload: boolean) =>
     (authenticationError.value = payload)
 
-  async function logIn(payload: LoginSchema): Promise<void> {
+  async function logIn(payload: LoginSchema): Promise<boolean> {
     const userRequestData: UserRequestData = {
       email: payload.email,
       password: payload.password
@@ -56,6 +56,8 @@ export const useLogInStore = defineStore('logIn', () => {
         })
         setToken(userResponseData.idToken)
       }
+
+      return true
     } catch (error: unknown) {
       // Проверяем, является ли ошибка экземпляром AxiosError
       if (isAxiosError<{ error?: { message: string } }>(error)) {
@@ -127,6 +129,8 @@ export const useLogInStore = defineStore('logIn', () => {
           })
       }
     }
+
+    return false
   }
 
   function logOut(): void {
