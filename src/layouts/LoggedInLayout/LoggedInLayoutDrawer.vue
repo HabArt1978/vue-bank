@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { drawerItems } from '@/assets/library/library'
 import { useLogInStore } from '@/stores/index'
-import { computed, defineModel, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
 

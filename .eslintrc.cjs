@@ -38,12 +38,12 @@ module.exports = {
       'error',
       {
         html: {
-          void: 'never',
-          normal: 'always',
-          component: 'always'
+          void: 'off',
+          normal: 'off',
+          component: 'off'
         },
-        svg: 'always',
-        math: 'always'
+        svg: 'off',
+        math: 'off'
       }
     ],
     'vue/component-name-in-template-casing': [

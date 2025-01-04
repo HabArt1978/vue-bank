@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import { toTypedSchema } from '@vee-validate/zod'
+import { storeToRefs } from 'pinia'
+import { useField, useForm } from 'vee-validate'
+
 import {
   orderStatuses,
   submitRequestSchema,
   type SubmitRequestSchema
 } from '@/assets/schemas/submitRequestSchema'
 import { useModalStore } from '@/stores/index'
-import { toTypedSchema } from '@vee-validate/zod'
-import { storeToRefs } from 'pinia'
-import { useField, useForm } from 'vee-validate'
-import { ref, watch } from 'vue'
+import MoneyField from '../Form/MoneyField.vue'
 
 const modalStore = useModalStore()
 const { modal: isModalActive } = storeToRefs(modalStore)
@@ -22,7 +23,7 @@ const { handleSubmit, errors, resetForm } = useForm({
     middleName: undefined,
     phone: undefined,
     email: undefined,
-    amount: undefined,
+    amount: 0,
     status: undefined
   }
 })
@@ -32,22 +33,8 @@ const { value: firstName } = useField('firstName')
 const { value: middleName } = useField('middleName')
 const { value: phone } = useField('phone')
 const { value: email } = useField('email')
-const { value: amount } = useField('amount')
-const { value: status } = useField('status')
-
-const formattedAmount = ref<string>('')
-
-watch(amount, (newAmount) => {
-  const amountAsNumber = Number(newAmount)
-
-  const formatCurrency = new Intl.NumberFormat('ru-Ru', {
-    style: 'currency',
-    currency: 'RUB'
-    // minimumFractionDigits: 0
-  })
-
-  formattedAmount.value = formatCurrency.format(amountAsNumber)
-})
+const { value: amount } = useField<number>('amount')
+const { value: status } = useField<undefined | string>('status')
 
 const onSubmit = handleSubmit(
   async (submitRequestData: SubmitRequestSchema) => {
@@ -130,25 +117,15 @@ const onSubmit = handleSubmit(
               class="marginBottom"
             />
 
-            <v-text-field
+            <MoneyField
               id="amount"
-              v-model="amount"
+              v-model:number="amount"
               name="amount"
               label="Сумма заявки *"
               placeholder="от 10.000р до 1.000.000р"
-              type="number"
-              min="10000"
-              max="1000000"
               :error-messages="errors.amount"
               class="marginBottom"
             />
-
-            <div
-              v-if="formattedAmount.length !== 0"
-              style="color: white; border: dashed red; margin-bottom: 10px"
-            >
-              {{ formattedAmount }}
-            </div>
 
             <v-select
               id="status"
@@ -161,9 +138,9 @@ const onSubmit = handleSubmit(
               :error-messages="errors.status"
             />
 
-            <small class="text-caption text-medium-emphasis"
-              >* - Поле обязательное для заполнения</small
-            >
+            <small class="text-caption text-medium-emphasis">
+              * - Поле обязательное для заполнения
+            </small>
 
             <v-divider />
 
