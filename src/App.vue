@@ -9,25 +9,27 @@ const { isAuthenticated } = storeToRefs(useLogInStore())
 </script>
 
 <template>
-  <v-slide-y-transition>
-    <TheAlert />
-  </v-slide-y-transition>
+  <v-app>
+    <v-slide-y-transition>
+      <TheAlert />
+    </v-slide-y-transition>
 
-  <LoggedInLayout v-if="isAuthenticated">
-    <router-view v-slot="{ Component }">
-      <v-fade-transition :hide-on-leave="true">
-        <component :is="Component" />
-      </v-fade-transition>
-    </router-view>
-  </LoggedInLayout>
+    <LoggedInLayout v-if="isAuthenticated">
+      <router-view v-slot="{ Component }">
+        <v-fade-transition :hide-on-leave="true">
+          <component :is="Component" />
+        </v-fade-transition>
+      </router-view>
+    </LoggedInLayout>
 
-  <MainLayout v-else>
-    <router-view v-slot="{ Component }">
-      <v-fade-transition :hide-on-leave="true">
-        <component :is="Component" />
-      </v-fade-transition>
-    </router-view>
-  </MainLayout>
+    <MainLayout v-else>
+      <router-view v-slot="{ Component }">
+        <v-fade-transition :hide-on-leave="true">
+          <component :is="Component" />
+        </v-fade-transition>
+      </router-view>
+    </MainLayout>
+  </v-app>
 </template>
 
 <style scoped>

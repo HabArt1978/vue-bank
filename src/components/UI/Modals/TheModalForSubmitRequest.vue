@@ -60,11 +60,11 @@ const onSubmit = handleSubmit(
 </script>
 
 <template>
-  <div class="pa-4 text-center">
-    <v-dialog
-      v-model="isModalActive"
-      max-width="600"
-    >
+  <v-dialog
+    v-model="isModalActive"
+    max-width="600"
+  >
+    <div class="pa-4 text-center">
       <v-card
         prepend-icon="mdi-receipt-text-plus"
         title="Создать заявку"
@@ -186,8 +186,8 @@ const onSubmit = handleSubmit(
           </v-form>
         </v-card-text>
       </v-card>
-    </v-dialog>
-  </div>
+    </div>
+  </v-dialog>
 </template>
 
 <style scoped>
