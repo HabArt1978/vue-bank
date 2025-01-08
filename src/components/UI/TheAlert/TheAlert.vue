@@ -36,7 +36,7 @@ const { setAlert } = alertStore
   top: 85px;
   right: 1%;
   width: 25vw;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .alertCloseButton {

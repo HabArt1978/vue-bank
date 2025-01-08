@@ -8,7 +8,7 @@ import {
   submitRequestSchema,
   type SubmitRequestSchema
 } from '@/assets/schemas/submitRequestSchema'
-import { useModalStore } from '@/stores/index'
+import { useModalStore, useRequestStore } from '@/stores/index'
 import MoneyField from '../Form/MoneyField.vue'
 
 const modalStore = useModalStore()
@@ -38,9 +38,9 @@ const { value: status } = useField<undefined | string>('status')
 
 const onSubmit = handleSubmit(
   async (submitRequestData: SubmitRequestSchema) => {
-    alert(JSON.stringify(submitRequestData, null, 2))
+    useRequestStore().createClientRequest(submitRequestData)
+
     setModal(false)
-    console.table(submitRequestData)
     resetForm()
   }
 )

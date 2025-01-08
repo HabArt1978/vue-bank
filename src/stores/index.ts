@@ -1,4 +1,5 @@
 export { useAlertStore } from './alertStore/useAlertStore'
 export { useLogInStore } from './logInStore/useLogInStore'
 export { useModalStore } from './modalStore/useModalStore'
+export { useRequestStore } from './requestStore/useRequestStore'
 export { useThemeStore } from './themeStore/useThemeStore'
