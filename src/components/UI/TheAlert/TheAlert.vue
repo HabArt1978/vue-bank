@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { useAlertStore } from '@/stores/index'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 
 const alertStore = useAlertStore()
 const { alert } = storeToRefs(alertStore)
+const isAlertVisible = computed(() => !!alertStore.alert)
 const { setAlert } = alertStore
 </script>
 
 <template>
   <v-alert
-    v-model="alert"
+    v-model="isAlertVisible"
     :title="alert?.alertTitle"
     :type="alert?.messageType"
     border="start"

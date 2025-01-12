@@ -1,5 +1,8 @@
-import { logInFromApi } from '@/api/modules/auth'
-import type { UserRequestData, UserResponseData } from '@/api/modules/types'
+import { logInFromApi } from '@/api/modules/auth/auth'
+import type {
+  UserRequestData,
+  UserResponseData
+} from '@/api/modules/auth/types'
 import type { LoginSchema } from '@/assets/schemas/loginSchema'
 import { useAlertStore } from '@/stores/index'
 import { isAxiosError } from 'axios'
