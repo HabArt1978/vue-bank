@@ -14,14 +14,14 @@ httpClient.interceptors.response.use(null, (error) => {
 
   if (error.response.status === 401) {
     router.push({ name: 'Login' })
-  }
 
-  setAlert({
-    alertColor: 'red',
-    alertTitle: 'Ошибка!',
-    messageType: 'error',
-    message: 'Пожалуйста, пройдите авторизацию!'
-  })
+    setAlert({
+      alertColor: 'red',
+      alertTitle: 'Ошибка!',
+      messageType: 'error',
+      message: 'Пожалуйста, пройдите авторизацию!'
+    })
+  }
 
   return Promise.reject(error)
 })
