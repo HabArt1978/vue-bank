@@ -1,11 +1,24 @@
 <script setup lang="ts">
 import TheRequestTable from '@/components/request/TheRequestTable/TheRequestTable.vue'
 import ThePageCardContainer from '@/components/ThePageCardContainer/ThePageCardContainer.vue'
+import TheLoader from '@/components/UI/Loader/TheLoader.vue'
 import TheModalForSubmitRequest from '@/components/UI/Modals/TheModalForSubmitRequest.vue'
-import { useModalStore } from '@/stores/index'
+import { useModalStore, useRequestStore } from '@/stores/index'
+import { storeToRefs } from 'pinia'
+import { onMounted, ref } from 'vue'
 
 const modalStore = useModalStore()
+const { requests } = storeToRefs(useRequestStore())
+const { getClientRequests } = useRequestStore()
 const setModal = modalStore.setModal
+
+const isLoading = ref(false)
+
+onMounted(async () => {
+  isLoading.value = true
+  await getClientRequests()
+  isLoading.value = false
+})
 </script>
 
 <template>
@@ -28,7 +41,12 @@ const setModal = modalStore.setModal
         </v-btn>
       </template>
 
-      <TheRequestTable :clients-data="[]" />
+      <TheLoader v-if="isLoading" />
+
+      <TheRequestTable
+        v-else
+        :clients-data="requests"
+      />
     </ThePageCardContainer>
   </div>
 </template>

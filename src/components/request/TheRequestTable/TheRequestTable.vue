@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ClientData } from './types'
+import type { NewRequestData } from '@/stores/requestStore/types'
 
 defineProps<{
-  clientsData: ClientData[]
+  clientsData: NewRequestData[]
 }>()
 </script>
 
@@ -16,23 +16,45 @@ defineProps<{
 
   <v-table v-else>
     <thead>
-      <tr>
-        <th class="text-left">#</th>
+      <tr class="text-body-1">
+        <th class="text-left">№</th>
         <th class="text-left">ФИО</th>
         <th class="text-left">Телефон</th>
+        <th class="text-left">Почта</th>
         <th class="text-left">Сумма</th>
         <th class="text-left">Статус</th>
         <th class="text-left">Действие</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td />
-        <td />
-        <td />
-        <td />
-        <td />
-        <td />
+      <tr
+        v-for="(clientInfo, idx) in clientsData"
+        :key="clientInfo.id"
+      >
+        <td>
+          {{ `${idx + 1}` }}
+        </td>
+        <td>
+          {{
+            `
+             ${clientInfo.lastName}
+             ${clientInfo.middleName}
+             ${clientInfo.firstName}
+            `
+          }}
+        </td>
+        <td>
+          {{ `${clientInfo.phone}` }}
+        </td>
+        <td>
+          {{ `${clientInfo.email}` }}
+        </td>
+        <td>
+          {{ `${clientInfo.amount}` }}
+        </td>
+        <td>
+          {{ `${clientInfo.status}` }}
+        </td>
       </tr>
     </tbody>
   </v-table>
