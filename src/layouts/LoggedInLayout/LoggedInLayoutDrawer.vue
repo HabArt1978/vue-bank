@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { drawerItems } from '@/assets/library/library'
-import { useLogInStore } from '@/stores/index'
+import { useAlertStore, useLogInStore } from '@/stores/index'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
@@ -8,6 +8,8 @@ import { useDisplay } from 'vuetify'
 const isDrawerOpen = defineModel<boolean>('isOpen', { required: true })
 
 const { logOut } = useLogInStore()
+const { setAlert } = useAlertStore()
+
 const { mobile } = useDisplay()
 const router = useRouter()
 
@@ -21,6 +23,15 @@ const activeLinks = computed({
 function userLogout() {
   logOut()
   router.push({ name: 'Login' })
+
+  setTimeout(() => {
+    setAlert({
+      alertColor: 'blue',
+      alertTitle: 'Информация!',
+      messageType: 'info',
+      message: 'Пожалуйста пройдите авторизацию!'
+    })
+  }, 1000)
 }
 </script>
 

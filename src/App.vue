@@ -1,11 +1,22 @@
 <script setup lang="ts">
-import { useLogInStore } from '@/stores/index'
+import { useAlertStore, useLogInStore } from '@/stores/index'
 import { storeToRefs } from 'pinia'
 import TheAlert from './components/UI/TheAlert/TheAlert.vue'
 import LoggedInLayout from './layouts/LoggedInLayout/LoggedInLayout.vue'
 import MainLayout from './layouts/MainLayout/MainLayout.vue'
 
 const { isAuthenticated } = storeToRefs(useLogInStore())
+const { setAlert } = useAlertStore()
+
+isAuthenticated &&
+  setTimeout(() => {
+    setAlert({
+      alertColor: 'blue',
+      alertTitle: 'Информация!',
+      messageType: 'info',
+      message: 'Пожалуйста пройдите авторизацию!'
+    })
+  }, 1000)
 </script>
 
 <template>
